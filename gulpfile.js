@@ -7,6 +7,8 @@ var gulp = require('gulp'),
     reload = browserSync.reload,
     browserify = require('browserify'),
     source = require('vinyl-source-stream'),
+    ts = require('gulp-typescript'),
+    tsProject = ts.createProject('tsconfig.json'),
     buffer = require('vinyl-buffer');
 
 
@@ -20,7 +22,7 @@ gulp.task('sass', function () {
 
 gulp.task('browserify', ['browserify_aSeriesPaper']); 
 
-gulp.task('browserify_aSeriesPaper', function() {  
+gulp.task('browserify_aSeriesPaper', ['ts'], function() {  
   return browserify({
         entries: './src/aSeriesPaper.js',
         debug: true,
@@ -32,6 +34,12 @@ gulp.task('browserify_aSeriesPaper', function() {
     .pipe(gulp.dest('./dist/'));
 });
 
+gulp.task('ts', function () {
+    return tsProject.src()
+        .pipe(tsProject())
+        .pipe(gulp.dest('src/'));
+});
+
 gulp.task('serve', ['sass','browserify'], function () {
     browserSync.init({
         server: {
@@ -40,7 +48,7 @@ gulp.task('serve', ['sass','browserify'], function () {
     });
     gulp.watch('./style/**/*.scss', ['sass']);
     gulp.watch('./style/*.scss', ['sass']);
-    gulp.watch('./src/*.js', ['browserify']);
+    gulp.watch(['./src/*.ts', '!./src/*.d.ts'], ['browserify']);
 
     gulp.watch('./example/*.html').on('change', reload);
     gulp.watch('./src/*.js').on('change', reload);

@@ -1,0 +1,61 @@
+// font settings
+$font-base: 14px;
+
+// page settings
+$page-ratio: 1.414213562373095; //  same ratios as a standard a4 paper
+$page-padding: 40px;
+
+html{
+    font-size: $font-base;
+}
+
+body{
+  margin: 0;
+  background: #555;
+}
+
+.page {
+  max-width: 21cm;
+  max-height: 29.7cm;
+  width: 100vw;
+  height: $page-ratio * 100vw; 
+  margin: 20px auto;
+  background: #fff;
+  box-shadow: 0 0 24px #333;
+  padding: $page-padding;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  &:last-of-type{
+      > main {
+          justify-content: flex-start;
+      }
+  }
+  > header{
+    text-align: right;
+    border-bottom: 2px solid;
+  }
+  > main{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  > footer{
+    border-top: 2px solid;
+    text-align: center;
+  }
+}
+
+@media print {
+  body{
+    // keep the same font size
+    font-size: 14 / 793.69 * 100vw;
+  }
+  .page {
+    margin:0 auto;
+    max-width: none;
+    max-height: none;
+  }
+}
