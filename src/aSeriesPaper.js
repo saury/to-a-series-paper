@@ -1,15 +1,17 @@
-var $ = require('jquery');
 var ASeriesPaper = (function () {
     function ASeriesPaper(options) {
         if (options === void 0) { options = {}; }
-        this.float = 0;
+        this.float = 0; // amount of the scaleable value of content area
         this.src = [];
         this.tmpArr = [];
         this.finalArr = [];
         this.scale = 0;
-        this.targets = (options.targets || $(document)).find(options.targets || $('figure'));
+        // target dom need to assert to the final doc, tag figure as the default targets
+        this.targets = (options.context || $(document)).find(options.targets || $('figure'));
+        // page templates defined in options or the default one
         this.template = options.template ||
             "<div class=\"page\">\n            <header>TRAILBLAZERS</header>\n            <main></main>\n            <footer>Page 1 of 1</footer>\n        </div>";
+        // container of the figures
         this.container = options.container || '.page > main';
         this.pageH = this.getContainer();
         this.container_H = this.resetHeight();
@@ -26,14 +28,10 @@ var ASeriesPaper = (function () {
     };
     // kick start 
     ASeriesPaper.prototype.init = function () {
-        console.log('init');
         // initial the src array to get the targets:{jquery object}
         var $targs = this.targets;
-        var _self = this;
-        var src = _self.src;
-        $.each($targs, function (index, ele) {
-            src.push($(ele));
-        });
+        var src = this.src;
+        $.each($targs, function (index, ele) { return src.push($(ele)); });
         // do judgement
         this.judgeExist();
     };
@@ -81,6 +79,7 @@ var ASeriesPaper = (function () {
     };
     // render the document to a4 paper doc
     ASeriesPaper.prototype.render = function () {
+        var _this = this;
         // in case that tmpArr is not empty
         this.tmpArr.length && this.finalArr.push({
             figures: this.tmpArr,
@@ -89,10 +88,11 @@ var ASeriesPaper = (function () {
         // empty all the content
         $('body').empty();
         console.log(this.finalArr);
-        var _self = this;
+        // generate the page according to the amount of the grouped figures
         $.each(this.finalArr, function (index, obj) {
-            $('body').append(_self.template);
-            var page = $('body').find($(_self.container).eq(index));
+            $('body').append(_this.template);
+            // wrap each group with the single page template
+            var page = $('body').find($(_this.container).eq(index));
             $.each(obj.figures, function (order, ele) {
                 page.append(ele);
             });

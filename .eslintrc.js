@@ -2,6 +2,7 @@ module.exports = {
     "env": {
         "node": true,
         "browser": true,
+        "jquery": true,
         "amd": true
     },
     "parserOptions": {
@@ -11,10 +12,7 @@ module.exports = {
     "extends": "eslint:recommended",
     "rules": {
         "no-console":0,
-        "quotes": [
-            "error",
-            "single"
-        ],
+        "quotes": 0,
         "semi": [
             "error"
         ]

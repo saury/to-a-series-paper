@@ -1,23 +1,24 @@
-declare function require(path: string): any;
-declare var $: any;
-interface Options {
+declare let $: any;
+declare let module: any;
+interface ASeriesPaperOptions {
     targets?: any;
     context?: any;
     template?: string;
     container?: string;
+    [propName: string]: any;
 }
 declare class ASeriesPaper {
     targets: any;
-    template: string;
-    container: any;
+    readonly container: any;
+    readonly template: string;
     pageH: number;
-    container_H: number;
     readonly float: number;
-    src: Array<any>;
-    tmpArr: Array<any>;
-    finalArr: Array<any>;
+    container_H: number;
+    src: any[];
+    tmpArr: any[];
+    finalArr: any[];
     scale: number;
-    constructor(options?: Options);
+    constructor(options?: ASeriesPaperOptions);
     getContainer(): number;
     resetHeight(): number;
     init(): void;
