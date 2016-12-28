@@ -17,7 +17,6 @@ declare class ASeriesPaper {
     src: any[];
     tmpArr: any[];
     finalArr: any[];
-    scale: number;
     constructor(options?: ASeriesPaperOptions);
     getContainer(): number;
     resetHeight(): number;

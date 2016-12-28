@@ -2,7 +2,9 @@
 $font-base: 14px;
 
 // page settings
-$page-ratio: 1.414213562373095; //  same ratios as a standard a4 paper
+// $page-ratio: sqrt(2); //  same ratios as a standard a4 paper
+// $page-ratio: 1.414213562373095; //  
+$page-ratio: 1.413; //  set the ratio a little lower to prevent the overflow issue in ff and safari
 $page-padding: 40px;
 
 html{
@@ -22,7 +24,7 @@ body{
   margin: 20px auto;
   background: #fff;
   box-shadow: 0 0 24px #333;
-  padding: $page-padding;
+  padding: 0 $page-padding; // pt and pb can't be set for it leads to a print bug in firefox
   box-sizing: border-box;
   position: relative;
   display: flex;
@@ -33,6 +35,7 @@ body{
       }
   }
   > header{
+    padding-top: 40px;
     text-align: right;
     border-bottom: 2px solid;
   }
@@ -44,6 +47,7 @@ body{
     // jusify-content: flex-start
   }
   > footer{
+    padding-bottom: 40px;
     border-top: 2px solid;
     text-align: center;
   }
@@ -55,6 +59,7 @@ body{
     font-size: 14 / 793.69 * 100vw;
   }
   .page {
+    box-shadow: none;
     margin:0 auto;
     max-width: none;
     max-height: none;

@@ -1,11 +1,12 @@
 var ASeriesPaper = (function () {
+    // Todo: scale value may set according to this.float value in each page for adjusting the layout
+    // simply set this value to 0 as the float value now
     function ASeriesPaper(options) {
         if (options === void 0) { options = {}; }
         this.float = 0; // amount of the scaleable value of content area
         this.src = [];
         this.tmpArr = [];
         this.finalArr = [];
-        this.scale = 0;
         // target dom need to assert to the final doc, tag figure as the default targets
         this.targets = (options.context || $(document)).find(options.targets || $('figure'));
         // page templates defined in options or the default one
@@ -65,11 +66,11 @@ var ASeriesPaper = (function () {
             // update the src list in case that the single figure's height beyond the container's
             this.tmpArr.length === 0 && updateSrcList();
             // set the scale ratio
-            this.scale = 0;
+            var scale = 0;
             // add the grouped targets into the final array
             this.finalArr.push({
                 figures: this.tmpArr,
-                ratio: this.scale
+                ratio: scale
             });
             // reset the container height and the tmpArr for preparing for next iteration
             this.container_H = this.resetHeight();
@@ -81,9 +82,10 @@ var ASeriesPaper = (function () {
     ASeriesPaper.prototype.render = function () {
         var _this = this;
         // in case that tmpArr is not empty
+        var scale = 0;
         this.tmpArr.length && this.finalArr.push({
             figures: this.tmpArr,
-            ratio: this.scale
+            ratio: scale
         });
         // empty all the content
         $('body').empty();

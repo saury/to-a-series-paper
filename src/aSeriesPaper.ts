@@ -19,7 +19,8 @@ class ASeriesPaper {
     src = []
     tmpArr = []
     finalArr = []
-    scale: number = 0
+    // Todo: scale value may set according to this.float value in each page for adjusting the layout
+    // simply set this value to 0 as the float value now
 
     constructor(options: ASeriesPaperOptions = {}) {
         // target dom need to assert to the final doc, tag figure as the default targets
@@ -91,11 +92,11 @@ class ASeriesPaper {
             // update the src list in case that the single figure's height beyond the container's
             this.tmpArr.length === 0 && updateSrcList();
             // set the scale ratio
-            this.scale = 0;
+            let scale = 0;
             // add the grouped targets into the final array
             this.finalArr.push({
                 figures: this.tmpArr,
-                ratio: this.scale
+                ratio: scale
             });
             // reset the container height and the tmpArr for preparing for next iteration
             this.container_H = this.resetHeight();
@@ -107,9 +108,10 @@ class ASeriesPaper {
     // render the document to a4 paper doc
     render(): void {
         // in case that tmpArr is not empty
+        let scale = 0
         this.tmpArr.length && this.finalArr.push({
             figures: this.tmpArr,
-            ratio: this.scale
+            ratio: scale
         });
         // empty all the content
         $('body').empty();
