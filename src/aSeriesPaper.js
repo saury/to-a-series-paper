@@ -7,13 +7,26 @@ var ASeriesPaper = (function () {
         this.src = [];
         this.tmpArr = [];
         this.finalArr = [];
+        // options which can be overload
+        var _a = options, 
+        /* default options: */
         // target dom need to assert to the final doc, tag figure as the default targets
-        this.targets = (options.context || $(document)).find(options.targets || $('figure'));
+        _b = _a.targets, 
+        /* default options: */
+        // target dom need to assert to the final doc, tag figure as the default targets
+        targets = _b === void 0 ? $('figure') : _b, _c = _a.context, context = _c === void 0 ? $(document) : _c, 
         // page templates defined in options or the default one
-        this.template = options.template ||
-            "<div class=\"page\">\n            <header>TRAILBLAZERS</header>\n            <main></main>\n            <footer>Page 1 of 1</footer>\n        </div>";
+        _d = _a.template, 
+        // page templates defined in options or the default one
+        template = _d === void 0 ? "<div class=\"page\">\n                            <header>TRAILBLAZERS</header>\n                            <main></main>\n                            <footer>Page 1 of 1</footer>\n                        </div>" : _d, 
         // container of the figures
-        this.container = options.container || '.page > main';
+        _e = _a.container, 
+        // container of the figures
+        container = _e === void 0 ? '.page > main' : _e;
+        // overload
+        this.targets = context.find(targets);
+        this.template = template;
+        this.container = container;
         this.pageH = this.getContainer();
         this.container_H = this.resetHeight();
     }

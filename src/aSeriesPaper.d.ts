@@ -18,15 +18,15 @@ declare class ASeriesPaper {
     tmpArr: any[];
     finalArr: any[];
     constructor(options?: ASeriesPaperOptions);
-    getContainer(): number;
-    resetHeight(): number;
+    private getContainer();
+    private resetHeight();
     init(): void;
-    judgeExist(): void;
+    private judgeExist();
     /**
      * compare the height of page container and each figure
      * @param {number} container_h
      * @param {number} figure_h
      */
-    compare(container_h: number, figure_h: number): void;
-    render(): void;
+    private compare(container_h, figure_h);
+    private render();
 }

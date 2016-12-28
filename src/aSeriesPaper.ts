@@ -22,25 +22,32 @@ class ASeriesPaper {
     // Todo: scale value may set according to this.float value in each page for adjusting the layout
     // simply set this value to 0 as the float value now
 
-    constructor(options: ASeriesPaperOptions = {}) {
-        // target dom need to assert to the final doc, tag figure as the default targets
-        this.targets = (options.context || $(document)).find(
-            options.targets || $('figure')
-        );
-        // page templates defined in options or the default one
-        this.template = options.template || 
-        `<div class="page">
-            <header>TRAILBLAZERS</header>
-            <main></main>
-            <footer>Page 1 of 1</footer>
-        </div>`;
-        // container of the figures
-        this.container = options.container || '.page > main';
+    constructor(options: ASeriesPaperOptions = {} as ASeriesPaperOptions) {
+        // options which can be overload
+        let {
+            /* default options: */
+            // target dom need to assert to the final doc, tag figure as the default targets
+            targets = $('figure'),
+            context = $(document),
+            // page templates defined in options or the default one
+            template = `<div class="page">
+                            <header>TRAILBLAZERS</header>
+                            <main></main>
+                            <footer>Page 1 of 1</footer>
+                        </div>`,
+            // container of the figures
+            container = '.page > main'
+        }:ASeriesPaperOptions = options as ASeriesPaperOptions;
+        
+        // overload
+        this.targets = context.find(targets);
+        this.template = template;
+        this.container = container;
         this.pageH = this.getContainer()
         this.container_H = this.resetHeight()
     }
 
-    getContainer(): number {
+    private getContainer(): number {
         $('body').append(this.template);
         let result = Math.floor($(this.container).innerHeight());
         $(this.container.split(' ')[0]).remove();
@@ -48,7 +55,7 @@ class ASeriesPaper {
     }
 
     // set the container_H to its initialized value
-    resetHeight(): number {
+    private resetHeight(): number {
         return this.pageH + this.float
     }
 
@@ -63,7 +70,7 @@ class ASeriesPaper {
     }
 
     // judge if target exists
-    judgeExist(): void {
+    private judgeExist(): void {
         let src = this.src;
         if (src[0]) this.compare(this.container_H, src[0].innerHeight());
         else this.render() // render the document after all the comparation done
@@ -74,7 +81,7 @@ class ASeriesPaper {
      * @param {number} container_h
      * @param {number} figure_h
      */
-    compare(container_h: number, figure_h: number): void {
+    private compare(container_h: number, figure_h: number): void {
         let updateSrcList = () => {
             // store the figure into the tmp array
             this.tmpArr.push(this.src[0])
@@ -106,7 +113,7 @@ class ASeriesPaper {
     }
 
     // render the document to a4 paper doc
-    render(): void {
+    private render(): void {
         // in case that tmpArr is not empty
         let scale = 0
         this.tmpArr.length && this.finalArr.push({
