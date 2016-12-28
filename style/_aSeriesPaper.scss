@@ -4,7 +4,7 @@ $font-base: 14px;
 // page settings
 // $page-ratio: sqrt(2); //  same ratios as a standard a4 paper
 // $page-ratio: 1.414213562373095; //  
-$page-ratio: 1.413; //  set the ratio a little lower to prevent the overflow issue in ff and safari
+$page-ratio: 1.4125; //  set the ratio a little lower to prevent the overflow issue in ff and safari
 $page-padding: 40px;
 
 html{
